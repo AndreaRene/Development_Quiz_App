@@ -1,6 +1,7 @@
 var quizBoxEl = document.getElementById("quizBox");
 var instructionsEl = document.getElementById("instructions");
-var startBtnEl = document.getElementById("startQuiz")
+var startBtnEl = document.getElementById("startQuiz");
+var timerEl = document.getElementById("timer");
 
 // define question and answer sets
 const testNest = [
@@ -22,6 +23,7 @@ startBtnEl.addEventListener("click", clickStart)
 
 // quiz script
 function clickStart() {
+    countdown();
     instructionsEl.remove();
     startBtnEl.remove();
     quizBoxEl.appendChild(answer1El);
@@ -57,6 +59,20 @@ function testTestNest(question, answer1, answer2, answer3) {
     console.log(answer2);
 }
 
+function countdown() {
+    var timeLeft = 75;
 
-
-
+    var timeInterval = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft + " seconds left";
+            timeLeft--;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft + " second left";
+            timeLeft--;
+        } else {
+            timerEl.textContent = timeLeft + " seconds left";
+            clearInterval(timeInterval);
+        }
+    }
+        , 1000);
+}
