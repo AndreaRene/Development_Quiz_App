@@ -19,23 +19,34 @@ var correctAnswer3 = questionArray[2][4];
 var correctAnswer4 = questionArray[3][3];
 var correctAnswer5 = questionArray[4][4];
 
+const answerArray = [correctAnswer1, correctAnswer2, correctAnswer3, correctAnswer4, correctAnswer5];
+
 console.log(correctAnswer1);
 console.log(correctAnswer2);
 console.log(correctAnswer3);
 console.log(correctAnswer4);
 console.log(correctAnswer5);
 
-// create answer button and text elements
-var answer1El = document.createElement("BUTTON");
-var answer2El = document.createElement("BUTTON");
-var answer3El = document.createElement("BUTTON");
-var answer4El = document.createElement("BUTTON");
+console.log(answerArray);
 
-var answer1TextEl = document.createTextNode("")
-var answer2TextEl = document.createTextNode("")
-var answer3TextEl = document.createTextNode("")
-var answer4TextEl = document.createTextNode("")
+// create answer buttons with a class and text elements for quiz
+var button1El = document.createElement("button");
+// button1El.setAttribute("class", "answer");
+var button2El = document.createElement("button");
+button2El.setAttribute("class", "answer");
+var button3El = document.createElement("button");
+button3El.setAttribute("class", "answer");
+var button4El = document.createElement("button");
+button4El.setAttribute("class", "answer");
 
+const buttonArray = [button1El, button2El, button3El, button4El];
+
+var button1TextEl = document.createTextNode("")
+var button2TextEl = document.createTextNode("")
+var button3TextEl = document.createTextNode("")
+var button4TextEl = document.createTextNode("")
+
+var questionNum = 0;
 
 // start button click starts off quiz
 startBtnEl.addEventListener("click", clickStart)
@@ -45,37 +56,40 @@ function clickStart() {
     countdown();
     instructionsEl.remove();
     startBtnEl.remove();
-    quizBoxEl.appendChild(answer1El);
-    answer1El.appendChild(answer1TextEl);
-    quizBoxEl.appendChild(answer2El);
-    answer2El.appendChild(answer2TextEl);
-    quizBoxEl.appendChild(answer3El);
-    answer3El.appendChild(answer3TextEl);
-    quizBoxEl.appendChild(answer4El);
-    answer4El.appendChild(answer4TextEl);
-
-
-    // for loop to iterate through questions and answers
-    for (i = 0; i <= 0; i++) {
-
-        answer1TextEl.textContent = questionArray[i][0];
-        answer1TextEl.textContent = questionArray[i][1];
-        answer1TextEl.textContent = questionArray[i][2];
-        answer1TextEl.textContent = questionArray[i][3];
-
-
-        // call the function to add text to buttons
-        iterateQuestionArray(questionArray[i][0], questionArray[i][1], questionArray[i][2], questionArray[i][3], questionArray[i][4]);
-    }
+    quizBoxEl.appendChild(button1El);
+    button1El.appendChild(button1TextEl);
+    quizBoxEl.appendChild(button2El);
+    button2El.appendChild(button2TextEl);
+    quizBoxEl.appendChild(button3El);
+    button3El.appendChild(button3TextEl);
+    quizBoxEl.appendChild(button4El);
+    button4El.appendChild(button4TextEl);
+    displayQuestions(questionNum);
 }
 
-function iterateQuestionArray(question, answer1, answer2, answer3, answer4) {
-    quizBoxEl.children[0].textContent = question;
-    answer1El.textContent = answer1;
-    answer2El.textContent = answer2;
-    answer3El.textContent = answer3;
-    answer4El.textContent = answer4;
 
+function buttonClick() {
+    for (i = 0; i < buttonArray.length; i++) {
+        buttonArray[i].addEventListener("click", displayQuestions(questionNum));
+    };
+}
+
+function displayQuestions(questionNum) {
+    if (questionNum < 5) {
+
+        quizBoxEl.children[0].textContent = questionArray[questionNum][0];
+        button1El.textContent = questionArray[questionNum][1];
+        button2El.textContent = questionArray[questionNum][2];
+        button3El.textContent = questionArray[questionNum][3];
+        button4El.textContent = questionArray[questionNum][4];
+
+        questionNum++;
+
+        buttonArray[0].addEventListener("click", displayQuestions(questionNum));
+
+    } else {
+        return;
+    }
 }
 
 // timer function
