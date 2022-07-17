@@ -4,34 +4,33 @@ var startBtnEl = document.getElementById("startQuiz");
 var timerEl = document.getElementById("timer");
 
 // define question and answer sets
+// TODO mix up correct answers
 const questionArray = [
     ["Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"],
     ["The condition in an if / else statement is enclosed with:", "quotes", "curly brackets", "parenthesis", "square brackets"],
-    ["Arrats in JavaScript can be used to store:", "numbers and strings", "other arrays", "booleans", "all of the above"],
-    ["String values must be enclosed with _______ when being assigned to variables", "commas", "curly brackets", "quotes", "parenthesis"],
+    ["Arrays in JavaScript can be used to store:", "numbers/strings", "other arrays", "booleans", "all of the above"],
+    ["String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "parenthesis"],
     ["A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"]
 ];
 
 // define correct answers for quiz function
+// TODO figure out which way is more correct 
 var correctAnswer1 = questionArray[0][3];
 var correctAnswer2 = questionArray[1][3];
 var correctAnswer3 = questionArray[2][4];
 var correctAnswer4 = questionArray[3][3];
 var correctAnswer5 = questionArray[4][4];
 
-const answerArray = [correctAnswer1, correctAnswer2, correctAnswer3, correctAnswer4, correctAnswer5];
+const answerArray1 = [correctAnswer1, correctAnswer2, correctAnswer3, correctAnswer4, correctAnswer5];
 
-console.log(correctAnswer1);
-console.log(correctAnswer2);
-console.log(correctAnswer3);
-console.log(correctAnswer4);
-console.log(correctAnswer5);
+const answerArray2 = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
 
-console.log(answerArray);
+console.log(answerArray2);
 
 // create answer buttons with a class and text elements for quiz
+// TODO use for loop to create buttons
 var button1El = document.createElement("button");
-// button1El.setAttribute("class", "answer");
+button1El.setAttribute("class", "answer");
 var button2El = document.createElement("button");
 button2El.setAttribute("class", "answer");
 var button3El = document.createElement("button");
@@ -40,7 +39,6 @@ var button4El = document.createElement("button");
 button4El.setAttribute("class", "answer");
 
 let answerClicked = document.querySelectorAll(".answer");
-console.log(answerClicked);
 
 const buttonArray = [button1El, button2El, button3El, button4El];
 
@@ -70,35 +68,35 @@ function clickStart() {
     displayQuestions(questionNum);
 }
 
+// event listener for on answer click(any button)
 function buttonClick() {
     for (i = 0; i < buttonArray.length; i++) {
         buttonArray[i].addEventListener("click", displayQuestions);
     };
+    // TODO: if correct, green background, text "correct" 
+    // else red background, text "incorrect" -10 from timer element
+    // pause .5 second
 }
 
+// questions iterated through from questionsArray
 function displayQuestions() {
     if (questionNum < questionArray.length) {
-
         quizBoxEl.children[0].textContent = questionArray[questionNum][0];
         button1El.textContent = questionArray[questionNum][1];
         button2El.textContent = questionArray[questionNum][2];
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
 
-
-
         buttonClick();
         questionNum++;
-
     } else {
         return;
     }
 }
-
+// TODO can this be smaller?
 // timer function
 function countdown() {
     var timeLeft = 75;
-
     var timeInterval = setInterval(function () {
         if (timeLeft > 1) {
             timerEl.textContent = timeLeft + " seconds left";

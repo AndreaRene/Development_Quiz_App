@@ -51,6 +51,12 @@ a:hover {
     flex-basis: 100%;
 }
 
+.answer {
+    width: 40%;
+    font-size: 1rem;
+    background-color: #3c6e71;
+}
+
 #pageFooter {
     display: flex;
     flex-direction: column;
@@ -58,8 +64,6 @@ a:hover {
     align-items: center;
 
 }
-
-.answer {}
 
 button {
     padding: .8rem 2rem;
