@@ -70,15 +70,14 @@ function clickStart() {
     displayQuestions(questionNum);
 }
 
-
 function buttonClick() {
     for (i = 0; i < buttonArray.length; i++) {
-        buttonArray[i].addEventListener("click", displayQuestions(questionNum + 1));
+        buttonArray[i].addEventListener("click", displayQuestions);
     };
 }
 
-function displayQuestions(questionNum) {
-    if (questionNum < 5) {
+function displayQuestions() {
+    if (questionNum < questionArray.length) {
 
         quizBoxEl.children[0].textContent = questionArray[questionNum][0];
         button1El.textContent = questionArray[questionNum][1];
@@ -86,9 +85,10 @@ function displayQuestions(questionNum) {
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
 
-        // questionNum++;
+
 
         buttonClick();
+        questionNum++;
 
     } else {
         return;
