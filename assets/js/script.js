@@ -6,7 +6,7 @@ var timerEl = document.getElementById("timer");
 // define question and answer sets
 const questionArray = [
     ["Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"],
-    ["The condition in an if / else statement is enclosed with:", "quotes", "cruly brackets", "parenthesis", "square brackets"],
+    ["The condition in an if / else statement is enclosed with:", "quotes", "curly brackets", "parenthesis", "square brackets"],
     ["Arrats in JavaScript can be used to store:", "numbers and strings", "other arrays", "booleans", "all of the above"],
     ["String values must be enclosed with _______ when being assigned to variables", "commas", "curly brackets", "quotes", "parenthesis"],
     ["A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"]
@@ -73,7 +73,7 @@ function clickStart() {
 
 function buttonClick() {
     for (i = 0; i < buttonArray.length; i++) {
-        buttonArray[i].addEventListener("click", displayQuestions(questionNum));
+        buttonArray[i].addEventListener("click", displayQuestions(questionNum + 1));
     };
 }
 
@@ -86,7 +86,7 @@ function displayQuestions(questionNum) {
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
 
-        questionNum++;
+        // questionNum++;
 
         buttonClick();
 
