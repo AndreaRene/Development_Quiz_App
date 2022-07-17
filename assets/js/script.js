@@ -6,17 +6,24 @@ var timerEl = document.getElementById("timer");
 // define question and answer sets
 const questionArray = [
     ["Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"],
-    ["what is an x?", "red", "blue", "green"],
-    ["How old are you?", "12", "52", "38"]
+    ["The condition in an if / else statement is enclosed with:", "quotes", "cruly brackets", "parenthesis", "square brackets"],
+    ["Arrats in JavaScript can be used to store:", "numbers and strings", "other arrays", "booleans", "all of the above"],
+    ["String values must be enclosed with _______ when being assigned to variables", "commas", "curly brackets", "quotes", "parenthesis"],
+    ["A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"]
 ];
 
-var correctAnswer1 = questionArray[0][2];
-var correctAnswer2 = questionArray[1][1];
-var correctAnswer3 = questionArray[2][3];
+// define correct answers for quiz function
+var correctAnswer1 = questionArray[0][3];
+var correctAnswer2 = questionArray[1][3];
+var correctAnswer3 = questionArray[2][4];
+var correctAnswer4 = questionArray[3][3];
+var correctAnswer5 = questionArray[4][4];
 
 console.log(correctAnswer1);
 console.log(correctAnswer2);
 console.log(correctAnswer3);
+console.log(correctAnswer4);
+console.log(correctAnswer5);
 
 // create answer button and text elements
 var answer1El = document.createElement("BUTTON");
