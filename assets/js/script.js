@@ -39,6 +39,9 @@ button3El.setAttribute("class", "answer");
 var button4El = document.createElement("button");
 button4El.setAttribute("class", "answer");
 
+let answerClicked = document.querySelectorAll(".answer");
+console.log(answerClicked);
+
 const buttonArray = [button1El, button2El, button3El, button4El];
 
 var button1TextEl = document.createTextNode("")
@@ -85,7 +88,7 @@ function displayQuestions(questionNum) {
 
         questionNum++;
 
-        buttonArray[0].addEventListener("click", displayQuestions(questionNum));
+        buttonClick();
 
     } else {
         return;
@@ -111,3 +114,5 @@ function countdown() {
     }
         , 1000);
 }
+
+
