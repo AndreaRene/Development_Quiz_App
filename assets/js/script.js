@@ -14,7 +14,6 @@ const questionArray = [
 ];
 
 // define correct answers for quiz function
-// TODO figure out which way is more correct 
 
 const answerArray2 = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
 
@@ -38,13 +37,19 @@ var button2TextEl = document.createTextNode("")
 var button3TextEl = document.createTextNode("")
 var button4TextEl = document.createTextNode("")
 
-var questionNum = 0;
+var initials = document.createElement("input");
+
+var questionNum;
+var timeLeft;
 
 // start button click starts off quiz
 startBtnEl.addEventListener("click", clickStart)
 
 // quiz script
 function clickStart() {
+    questionNum = 0;
+    timeLeft = 76;
+    minus10 = false;
     countdown();
     instructionsEl.remove();
     startBtnEl.remove();
@@ -81,6 +86,7 @@ function buttonClick(e) {
 
     setTimeout(function () {
         e.target.setAttribute("style", "background-color: #3c6e71");
+        questionNum++;
         displayQuestions();
     }, 500)
 }
@@ -93,35 +99,64 @@ function displayQuestions() {
         button2El.textContent = questionArray[questionNum][2];
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
-        questionNum++;
+
 
     } else {
-        return;
+        console.log(questionNum);
+        displayScore();
     }
+
 }
+
+
+function displayScore() {
+    quizBoxEl.children[0].textContent = "Your score is " + Math.floor(timeLeft);
+    button1El.remove();
+    button2El.remove();
+    button3El.remove();
+    button4El.remove();
+    quizBoxEl.appendChild(instructionsEl).textContent = "Enter your initials to save your score:";
+    quizBoxEl.appendChild(initials);
+    quizBoxEl.appendChild(startBtnEl);
+    startBtnEl.textContent = "Restart Quiz";
+}
+
+
+
 
 // TODO can this be smaller?
 // timer function
 function countdown() {
-    var timeLeft = 75;
     var timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
-            if (minus10) {
-                timeLeft -= 10;
-                timerEl.textContent = timeLeft + " seconds left";
-                minus10 = false;
-            } else {
-                timerEl.textContent = timeLeft + " seconds left";
-                timeLeft--;
-            }
-        } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft + " second left";
-            timeLeft--;
-        } else {
-            timerEl.textContent = timeLeft + " seconds left";
+        if (questionNum === questionArray.length && minus10) {
+            timeLeft -= 9.9;
+            timerEl.textContent = Math.floor(timeLeft) + " seconds left";
             clearInterval(timeInterval);
-            timerEl.textContent = "Your time is up.";
+            minus10 = false;
+            return;
+        } else if (questionNum === questionArray.length) {
+            clearInterval(timeInterval);
+            return;
+        } else {
+            if (timeLeft > 1) {
+                if (minus10) {
+                    timeLeft -= 9.9;
+                    timerEl.textContent = Math.floor(timeLeft) + " seconds left";
+                    minus10 = false;
+                } else {
+                    timeLeft = timeLeft - .1;
+                    timerEl.textContent = Math.floor(timeLeft) + " seconds left";
+                }
+            } else if (timeLeft === 1) {
+                timerEl.textContent = Math.floor(timeLeft) + " second left";
+                timeLeft = timeLeft - .1;
+            } else {
+                clearInterval(timeInterval);
+                timerEl.textContent = "Your time is up.";
+                displayScore();
+            }
         }
-    }
-        , 1000);
+    }, 100);
+
 }
+
