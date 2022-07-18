@@ -41,6 +41,8 @@ button3El.setAttribute("class", "answer");
 var button4El = document.createElement("button");
 button4El.setAttribute("class", "answer");
 
+var clearScoresBtn = document.createElement("button");
+
 var initials = document.createElement("input");
 var saveScore = document.createElement("button");
 
@@ -56,6 +58,7 @@ function clickStart() {
     timeLeft = 76;
     minus10 = false;
     countdown();
+    clearScoresBtn.remove();
     initials.remove();
     instructionsEl.remove();
     saveScore.remove();
@@ -103,7 +106,6 @@ function displayQuestions() {
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
     } else {
-        console.log(questionNum);
         displayScore();
     }
 }
@@ -121,13 +123,19 @@ function displayScore() {
 }
 
 // var initials = document.createElement("input");
-// initials.setAttribute("id", "box")
 // var saveScore = document.createElement("button");
 
-saveScore.addEventListener("click", storeScore);
+saveScore.addEventListener("click", highScoreBoard);
 
-const numHighScores = 5;
-const highScores = "highScores";
+
+function highScoreBoard() {
+    saveScore.remove();
+    timerEl.remove();
+    initials.remove();
+    quizBoxEl.children[0].textContent = "High Scores"
+    quizBoxEl.appendChild(clearScoresBtn).textContent = "Clear Scores";
+    storeScore();
+}
 
 function storeScore() {
     localStorage.setItem("initials", initials.value);
