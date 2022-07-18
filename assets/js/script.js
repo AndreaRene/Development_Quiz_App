@@ -2,7 +2,7 @@ var quizBoxEl = document.getElementById("quizBox");
 var instructionsEl = document.getElementById("instructions");
 var startBtnEl = document.getElementById("startQuiz");
 var timerEl = document.getElementById("timer");
-
+var minus10 = false;
 // define question and answer sets
 // TODO mix up correct answers
 const questionArray = [
@@ -65,18 +65,38 @@ function clickStart() {
     button3El.appendChild(button3TextEl);
     quizBoxEl.appendChild(button4El);
     button4El.appendChild(button4TextEl);
-    displayQuestions(questionNum);
+    displayQuestions();
 }
 
 // event listener for on answer click(any button)
-function buttonClick() {
-    for (i = 0; i < buttonArray.length; i++) {
-        buttonArray[i].addEventListener("click", displayQuestions);
-    };
-    // TODO: if correct, green background, text "correct" 
-    // else red background, text "incorrect" -10 from timer element
-    // pause .5 second
+for (i = 0; i < buttonArray.length; i++) {
+    buttonArray[i].addEventListener("click", buttonClick)
 }
+
+function buttonClick(e) {
+
+    for (j = 0; j < answerArray2.length; j++) {
+        if (button1El.textContent.toString() === answerArray2[j].toString()) {
+            console.log(answerArray2.length);
+        }
+        if (e.target.textContent === answerArray2[j]) {
+            e.target.setAttribute("style", "background-color: green");
+        } else {
+            e.target.setAttribute("style", "background-color: red")
+        };
+
+
+    }
+
+    setTimeout(function () {
+        displayQuestions();
+    }, 2000)
+}
+
+
+// TODO: if correct, green background, text "correct" 
+// else red background, text "incorrect" -10 from timer element
+// pause .5 second
 
 // questions iterated through from questionsArray
 function displayQuestions() {
@@ -86,21 +106,27 @@ function displayQuestions() {
         button2El.textContent = questionArray[questionNum][2];
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
-
-        buttonClick();
         questionNum++;
+
     } else {
         return;
     }
 }
+
 // TODO can this be smaller?
 // timer function
 function countdown() {
     var timeLeft = 75;
     var timeInterval = setInterval(function () {
         if (timeLeft > 1) {
-            timerEl.textContent = timeLeft + " seconds left";
-            timeLeft--;
+            if (minus10) {
+                timeLeft -= 10;
+                timerEl.textContent = timeLeft + " seconds left";
+                minus10 = false;
+            } else {
+                timerEl.textContent = timeLeft + " seconds left";
+                timeLeft--;
+            }
         } else if (timeLeft === 1) {
             timerEl.textContent = timeLeft + " second left";
             timeLeft--;
@@ -112,5 +138,3 @@ function countdown() {
     }
         , 1000);
 }
-
-
