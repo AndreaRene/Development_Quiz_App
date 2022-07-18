@@ -7,25 +7,16 @@ var minus10 = false;
 // TODO mix up correct answers
 const questionArray = [
     ["Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"],
-    ["The condition in an if / else statement is enclosed with:", "quotes", "curly brackets", "parenthesis", "square brackets"],
+    ["The condition in an if / else statement is enclosed with:", "carrots", "curly brackets", "parenthesis", "square brackets"],
     ["Arrays in JavaScript can be used to store:", "numbers/strings", "other arrays", "booleans", "all of the above"],
-    ["String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "parenthesis"],
+    ["String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "ampersands"],
     ["A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"]
 ];
 
 // define correct answers for quiz function
 // TODO figure out which way is more correct 
-var correctAnswer1 = questionArray[0][3];
-var correctAnswer2 = questionArray[1][3];
-var correctAnswer3 = questionArray[2][4];
-var correctAnswer4 = questionArray[3][3];
-var correctAnswer5 = questionArray[4][4];
-
-const answerArray1 = [correctAnswer1, correctAnswer2, correctAnswer3, correctAnswer4, correctAnswer5];
 
 const answerArray2 = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
-
-console.log(answerArray2);
 
 // create answer buttons with a class and text elements for quiz
 // TODO use for loop to create buttons
@@ -78,27 +69,21 @@ function buttonClick(e) {
     for (j = 0; j < answerArray2.length; j++) {
         if (e.target.textContent === answerArray2[j]) {
             e.target.setAttribute("style", "background-color: green");
+            minus10 = false;
             console.log(e.target.textContent);
             break;
         } else if (e.target.textContent !== answerArray2[j]) {
             e.target.setAttribute("style", "background-color: red");
+            minus10 = true;
             console.log(e.target.textContent);
         }
-
-
-
     }
 
     setTimeout(function () {
-        e.target.setAttribute("style", "background-color: #3c6e71")
+        e.target.setAttribute("style", "background-color: #3c6e71");
         displayQuestions();
-    }, 2000)
+    }, 500)
 }
-
-
-// TODO: if correct, green background, text "correct" 
-// else red background, text "incorrect" -10 from timer element
-// pause .5 second
 
 // questions iterated through from questionsArray
 function displayQuestions() {
