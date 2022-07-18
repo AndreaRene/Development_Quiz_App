@@ -27,10 +27,13 @@
 
 // WHEN I answer a question
     // answer selections will be clickable buttons
-         // color change on click
-            // green correct
-            // red incorrect
-        // created in js?
+    //need event listener for click
+            // color change on click
+                // correct - green
+                // incorrect - red minus 10sec
+            // created in js
+                // figure out loop to dynamically create buttons from question array
+                // else create 4 buttons 
 
 // THEN I am presented with another question
     // replace current question with another question from the array
@@ -41,16 +44,26 @@
 // WHEN I answer a question incorrectly
 
 // THEN time is subtracted from the clock
+    // global var minus10 that 
+        // needs to reset after score is subtracted
 
 
 // WHEN all questions are answered or the timer reaches 0
+    // add end quiz function that stops timer if there is time left
+        // needs to go into the runquiz function and the run timer function
 
 // THEN the game is over
+    //replace questions with score
+        // time left equals score
+
 
 
 // WHEN the game is over
 
 // THEN I can save my initials and score
-
-
+    // replace answer buttons with input for initials, save button, restart quiz button
+    // store scores and initials in local storage
+    // replace score text with high scores
+    // replace buttons with high score list (5 scores) and reset high scores button
+        //reset high scores - local storage clear function
 

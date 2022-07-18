@@ -3,14 +3,27 @@ var instructionsEl = document.getElementById("instructions");
 var startBtnEl = document.getElementById("startQuiz");
 var timerEl = document.getElementById("timer");
 var minus10 = false;
+var questionNum;
+var timeLeft;
+
 // define question and answer sets
 // TODO mix up correct answers
 const questionArray = [
-    ["Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"],
-    ["The condition in an if / else statement is enclosed with:", "carrots", "curly brackets", "parenthesis", "square brackets"],
-    ["Arrays in JavaScript can be used to store:", "numbers/strings", "other arrays", "booleans", "all of the above"],
-    ["String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "ampersands"],
-    ["A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"]
+    [
+        "Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"
+    ],
+    [
+        "The condition in an if / else statement is enclosed with:", "carrots", "curly brackets", "parenthesis", "square brackets"
+    ],
+    [
+        "Arrays in JavaScript can be used to store:", "numbers/strings", "other arrays", "booleans", "all of the above"
+    ],
+    [
+        "String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "ampersands"
+    ],
+    [
+        "A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"
+    ]
 ];
 
 // define correct answers for quiz function
@@ -28,19 +41,11 @@ button3El.setAttribute("class", "answer");
 var button4El = document.createElement("button");
 button4El.setAttribute("class", "answer");
 
-let answerClicked = document.querySelectorAll(".answer");
+var initials = document.createElement("input");
+var saveScore = document.createElement("button");
+
 
 const buttonArray = [button1El, button2El, button3El, button4El];
-
-var button1TextEl = document.createTextNode("")
-var button2TextEl = document.createTextNode("")
-var button3TextEl = document.createTextNode("")
-var button4TextEl = document.createTextNode("")
-
-var initials = document.createElement("input");
-
-var questionNum;
-var timeLeft;
 
 // start button click starts off quiz
 startBtnEl.addEventListener("click", clickStart)
@@ -51,16 +56,14 @@ function clickStart() {
     timeLeft = 76;
     minus10 = false;
     countdown();
+    initials.remove();
     instructionsEl.remove();
+    saveScore.remove();
     startBtnEl.remove();
     quizBoxEl.appendChild(button1El);
-    button1El.appendChild(button1TextEl);
     quizBoxEl.appendChild(button2El);
-    button2El.appendChild(button2TextEl);
     quizBoxEl.appendChild(button3El);
-    button3El.appendChild(button3TextEl);
     quizBoxEl.appendChild(button4El);
-    button4El.appendChild(button4TextEl);
     displayQuestions();
 }
 
@@ -99,15 +102,11 @@ function displayQuestions() {
         button2El.textContent = questionArray[questionNum][2];
         button3El.textContent = questionArray[questionNum][3];
         button4El.textContent = questionArray[questionNum][4];
-
-
     } else {
         console.log(questionNum);
         displayScore();
     }
-
 }
-
 
 function displayScore() {
     quizBoxEl.children[0].textContent = "Your score is " + Math.floor(timeLeft);
@@ -117,15 +116,26 @@ function displayScore() {
     button4El.remove();
     quizBoxEl.appendChild(instructionsEl).textContent = "Enter your initials to save your score:";
     quizBoxEl.appendChild(initials);
-    quizBoxEl.appendChild(startBtnEl);
-    startBtnEl.textContent = "Restart Quiz";
+    quizBoxEl.appendChild(saveScore).textContent = "Save score";
+    quizBoxEl.appendChild(startBtnEl).textContent = "Restart Quiz";
 }
 
+// var initials = document.createElement("input");
+// initials.setAttribute("id", "box")
+// var saveScore = document.createElement("button");
 
+saveScore.addEventListener("click", storeScore);
 
+const numHighScores = 5;
+const highScores = "highScores";
 
-// TODO can this be smaller?
+function storeScore() {
+    localStorage.setItem("initials", initials.value);
+    localStorage.setItem("score", Math.floor(timeLeft));
+}
+
 // timer function
+
 function countdown() {
     var timeInterval = setInterval(function () {
         if (questionNum === questionArray.length && minus10) {
@@ -157,6 +167,5 @@ function countdown() {
             }
         }
     }, 100);
-
 }
 
