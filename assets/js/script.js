@@ -30,26 +30,26 @@ const questionArray = [
 
 const answerArray2 = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
 
-// create answer buttons with a class and text elements for quiz
-// TODO use for loop to create buttons
-var button1El = document.createElement("button");
-button1El.setAttribute("class", "answer");
-var button2El = document.createElement("button");
-button2El.setAttribute("class", "answer");
-var button3El = document.createElement("button");
-button3El.setAttribute("class", "answer");
-var button4El = document.createElement("button");
-button4El.setAttribute("class", "answer");
+// create answer buttons with a class for quiz answers
+
+
+const buttonArray = [];
+
+for (var i = 1; i < questionArray[0].length; i++) {
+    var button = document.createElement("button");
+    button.setAttribute("class", "answer");
+    buttonArray.push(button);
+}
+
 
 var clearScoresBtn = document.createElement("button");
 
 var initials = document.createElement("input");
 var saveScore = document.createElement("button");
-
-
-const buttonArray = [button1El, button2El, button3El, button4El];
+var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
 
 // start button click starts off quiz
+
 startBtnEl.addEventListener("click", clickStart)
 
 // quiz script
@@ -63,14 +63,17 @@ function clickStart() {
     instructionsEl.remove();
     saveScore.remove();
     startBtnEl.remove();
-    quizBoxEl.appendChild(button1El);
-    quizBoxEl.appendChild(button2El);
-    quizBoxEl.appendChild(button3El);
-    quizBoxEl.appendChild(button4El);
+
+    // add buttons for quiz answers to the element 
+
+    for (var i = 0; i < buttonArray.length; i++) {
+        quizBoxEl.appendChild(buttonArray[i]);
+    }
     displayQuestions();
 }
 
 // event listener for on answer click(any button)
+
 for (i = 0; i < buttonArray.length; i++) {
     buttonArray[i].addEventListener("click", buttonClick)
 }
@@ -81,12 +84,10 @@ function buttonClick(e) {
         if (e.target.textContent === answerArray2[j]) {
             e.target.setAttribute("style", "background-color: green");
             minus10 = false;
-            console.log(e.target.textContent);
             break;
         } else if (e.target.textContent !== answerArray2[j]) {
             e.target.setAttribute("style", "background-color: red");
             minus10 = true;
-            console.log(e.target.textContent);
         }
     }
 
@@ -98,35 +99,30 @@ function buttonClick(e) {
 }
 
 // questions iterated through from questionsArray
+
 function displayQuestions() {
     if (questionNum < questionArray.length) {
         quizBoxEl.children[0].textContent = questionArray[questionNum][0];
-        button1El.textContent = questionArray[questionNum][1];
-        button2El.textContent = questionArray[questionNum][2];
-        button3El.textContent = questionArray[questionNum][3];
-        button4El.textContent = questionArray[questionNum][4];
+        for (var i = 0; i < buttonArray.length; i++) {
+            buttonArray[i].textContent = questionArray[questionNum][i + 1];
+        }
     } else {
         displayScore();
     }
 }
 
 function displayScore() {
+    for (var i = 0; i < buttonArray.length; i++) {
+        buttonArray[i].remove();
+    }
     quizBoxEl.children[0].textContent = "Your score is " + Math.floor(timeLeft);
-    button1El.remove();
-    button2El.remove();
-    button3El.remove();
-    button4El.remove();
     quizBoxEl.appendChild(instructionsEl).textContent = "Enter your initials to save your score:";
     quizBoxEl.appendChild(initials);
     quizBoxEl.appendChild(saveScore).textContent = "Save score";
     quizBoxEl.appendChild(startBtnEl).textContent = "Restart Quiz";
 }
 
-// var initials = document.createElement("input");
-// var saveScore = document.createElement("button");
-
 saveScore.addEventListener("click", highScoreBoard);
-
 
 function highScoreBoard() {
     saveScore.remove();
@@ -137,9 +133,23 @@ function highScoreBoard() {
     storeScore();
 }
 
+//MOVE UP
+
+
+// TODO
 function storeScore() {
-    localStorage.setItem("initials", initials.value);
-    localStorage.setItem("score", Math.floor(timeLeft));
+    var scoreSet = {
+        initials: initials.value,
+        score: Math.floor(timeLeft)
+    }
+    scoreSets.push(scoreSet);
+    localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
+}
+
+clearScoresBtn.addEventListener("click", clearScore);
+
+function clearScore() {
+    localStorage.clear();
 }
 
 // timer function
