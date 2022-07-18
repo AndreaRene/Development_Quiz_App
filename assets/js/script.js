@@ -76,19 +76,21 @@ for (i = 0; i < buttonArray.length; i++) {
 function buttonClick(e) {
 
     for (j = 0; j < answerArray2.length; j++) {
-        if (button1El.textContent.toString() === answerArray2[j].toString()) {
-            console.log(answerArray2.length);
-        }
         if (e.target.textContent === answerArray2[j]) {
             e.target.setAttribute("style", "background-color: green");
-        } else {
-            e.target.setAttribute("style", "background-color: red")
-        };
+            console.log(e.target.textContent);
+            break;
+        } else if (e.target.textContent !== answerArray2[j]) {
+            e.target.setAttribute("style", "background-color: red");
+            console.log(e.target.textContent);
+        }
+
 
 
     }
 
     setTimeout(function () {
+        e.target.setAttribute("style", "background-color: #3c6e71")
         displayQuestions();
     }, 2000)
 }
