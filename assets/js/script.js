@@ -1,7 +1,22 @@
+// elements needed from dom
+
 var quizBoxEl = document.getElementById("quizBox");
 var instructionsEl = document.getElementById("instructions");
 var startBtnEl = document.getElementById("startQuiz");
 var timerEl = document.getElementById("timer");
+
+//create elements needed by quiz 
+
+var initials = document.createElement("input");
+var saveScore = document.createElement("button");
+var clearScoresBtn = document.createElement("button");
+
+// local storage variables
+
+var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
+
+//other assorted global variables
+
 var minus10 = false;
 var questionNum;
 var timeLeft;
@@ -32,7 +47,6 @@ const answerArray2 = [questionArray[0][3], questionArray[1][3], questionArray[2]
 
 // create answer buttons with a class for quiz answers
 
-
 const buttonArray = [];
 
 for (var i = 1; i < questionArray[0].length; i++) {
@@ -41,28 +55,22 @@ for (var i = 1; i < questionArray[0].length; i++) {
     buttonArray.push(button);
 }
 
-
-var clearScoresBtn = document.createElement("button");
-
-var initials = document.createElement("input");
-var saveScore = document.createElement("button");
-var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
-
 // start button click starts off quiz
 
 startBtnEl.addEventListener("click", clickStart)
 
 // quiz script
+
 function clickStart() {
     questionNum = 0;
     timeLeft = 76;
     minus10 = false;
-    countdown();
     clearScoresBtn.remove();
     initials.remove();
     instructionsEl.remove();
     saveScore.remove();
     startBtnEl.remove();
+    countdown();
 
     // add buttons for quiz answers to the element 
 
@@ -70,32 +78,6 @@ function clickStart() {
         quizBoxEl.appendChild(buttonArray[i]);
     }
     displayQuestions();
-}
-
-// event listener for on answer click(any button)
-
-for (i = 0; i < buttonArray.length; i++) {
-    buttonArray[i].addEventListener("click", buttonClick)
-}
-
-function buttonClick(e) {
-
-    for (j = 0; j < answerArray2.length; j++) {
-        if (e.target.textContent === answerArray2[j]) {
-            e.target.setAttribute("style", "background-color: green");
-            minus10 = false;
-            break;
-        } else if (e.target.textContent !== answerArray2[j]) {
-            e.target.setAttribute("style", "background-color: red");
-            minus10 = true;
-        }
-    }
-
-    setTimeout(function () {
-        e.target.setAttribute("style", "background-color: #3c6e71");
-        questionNum++;
-        displayQuestions();
-    }, 500)
 }
 
 // questions iterated through from questionsArray
@@ -111,32 +93,69 @@ function displayQuestions() {
     }
 }
 
+// event listener for on answer click(any button)
+
+for (i = 0; i < buttonArray.length; i++) {
+    buttonArray[i].addEventListener("click", buttonClick)
+}
+
+// compare answers against answerArray and determimine correct or not correct
+
+function buttonClick(e) {
+
+    for (j = 0; j < answerArray2.length; j++) {
+        if (e.target.textContent === answerArray2[j]) {
+            e.target.setAttribute("style", "background-color: green");
+            minus10 = false;
+            break;
+        } else if (e.target.textContent !== answerArray2[j]) {
+            e.target.setAttribute("style", "background-color: red");
+            minus10 = true;
+        }
+    }
+
+    // pause .5 second after answer clicked to allow user to review answer choice
+
+    setTimeout(function () {
+        e.target.setAttribute("style", "background-color: #3c6e71");
+        questionNum++;
+        displayQuestions();
+    }, 500)
+}
+
+// iterates back through displayQuestions for as many times as there are questions in questionArray
+
+// end of quiz where user can see and save score and restart quiz
+
 function displayScore() {
     for (var i = 0; i < buttonArray.length; i++) {
         buttonArray[i].remove();
     }
     quizBoxEl.children[0].textContent = "Your score is " + Math.floor(timeLeft);
     quizBoxEl.appendChild(instructionsEl).textContent = "Enter your initials to save your score:";
+    initials.textContent = "";
     quizBoxEl.appendChild(initials);
     quizBoxEl.appendChild(saveScore).textContent = "Save score";
     quizBoxEl.appendChild(startBtnEl).textContent = "Restart Quiz";
 }
 
+// display high score board and offer option to restart or clear scores in storage
+
 saveScore.addEventListener("click", highScoreBoard);
 
 function highScoreBoard() {
     saveScore.remove();
-    timerEl.remove();
     initials.remove();
+    timerEl.textContent = "";
     quizBoxEl.children[0].textContent = "High Scores"
     quizBoxEl.appendChild(clearScoresBtn).textContent = "Clear Scores";
     storeScore();
 }
 
-//MOVE UP
+// TODO finish score board: 
 
+// define local storage objects
 
-// TODO
 function storeScore() {
     var scoreSet = {
         initials: initials.value,
@@ -146,10 +165,13 @@ function storeScore() {
     localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
 }
 
+// clear local storage(scores)
+
 clearScoresBtn.addEventListener("click", clearScore);
 
 function clearScore() {
     localStorage.clear();
+    clearScoresBtn.textContent = "Cleared";
 }
 
 // timer function
@@ -186,4 +208,3 @@ function countdown() {
         }
     }, 100);
 }
-
