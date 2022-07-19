@@ -10,6 +10,17 @@ var timerEl = document.getElementById("timer");
 var initials = document.createElement("input");
 var saveScore = document.createElement("button");
 var clearScoresBtn = document.createElement("button");
+var highScoreDisplay = document.createElement("ol");
+
+highScoreScoresArray = [];
+
+// create li items for scoreboard
+// for more or less change i < 5
+
+for (i = 0; i < 5; i++) {
+    var highScoreScores = document.createElement("li");
+    highScoreScoresArray.push(highScoreScores);
+}
 
 // local storage variables
 
@@ -23,6 +34,7 @@ var timeLeft;
 
 // define question and answer sets
 // TODO mix up correct answers
+
 const questionArray = [
     [
         "Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"
@@ -147,7 +159,11 @@ function highScoreBoard() {
     saveScore.remove();
     initials.remove();
     timerEl.textContent = "";
-    quizBoxEl.children[0].textContent = "High Scores"
+    quizBoxEl.children[0].textContent = "High Scores";
+    instructionsEl.appendChild(highScoreDisplay);
+    for (var i = 0; i < highScoreScoresArray.length; i++) {
+        quizBoxEl.appendChild(highScoreScoresArray[i]).textContent = "List Item";
+    }
     quizBoxEl.appendChild(clearScoresBtn).textContent = "Clear Scores";
     storeScore();
 }
@@ -160,7 +176,7 @@ function storeScore() {
     var scoreSet = {
         initials: initials.value,
         score: Math.floor(timeLeft)
-    }
+    };
     scoreSets.push(scoreSet);
     localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
 }
