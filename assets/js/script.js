@@ -4,8 +4,9 @@
 
 var quizBoxEl = document.getElementById("quizBox");
 var instructionsEl = document.getElementById("instructions");
-var startRestartBtnEl = document.getElementById("startQuiz");
+var startBtnEL = document.getElementById("startQuiz");
 var timerEl = document.getElementById("timer");
+var highScoresLinkEl = document.getElementById("highScoreLink");
 
 //create elements needed by quiz 
 
@@ -13,6 +14,7 @@ var initialsInputEl = document.createElement("input");
 var SaveScoreBtnEl = document.createElement("button");
 var clearScoresBtnEl = document.createElement("button");
 var highScoresOlEl = document.createElement("ol");
+var resetBtn = document.createElement("button");
 
 highScoresArray = [];
 
@@ -52,7 +54,7 @@ const questionArray = [
         "String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "ampersands"
     ],
     [
-        "A very useful tool to use during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"
+        "A useful tool to use during development/debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"
     ]
 ];
 
@@ -72,23 +74,15 @@ for (var i = 1; i < questionArray[0].length; i++) {
 
 // start button click starts off quiz
 
-startRestartBtnEl.addEventListener("click", clickStart)
+startBtnEL.addEventListener("click", clickStart)
 
 // quiz script
 
 function clickStart() {
     questionNum = 0;
     timeLeft = 76;
-    minus10 = false;
-    highScoresOlEl.remove();
-    for (var i = 0; i < highScoresArray.length; i++) {
-        highScoresArray[i].remove();
-    }
-    clearScoresBtnEl.remove();
-    initialsInputEl.remove();
     instructionsEl.remove();
-    SaveScoreBtnEl.remove();
-    startRestartBtnEl.remove();
+    startBtnEL.remove();
     countdown();
 
     // add buttons for quiz answers to the element 
@@ -146,6 +140,7 @@ function btnClick(e) {
 
 // end of quiz where user can see and save score and restart quiz
 
+
 function displayScore() {
     for (var i = 0; i < btnArray.length; i++) {
         btnArray[i].remove();
@@ -155,12 +150,13 @@ function displayScore() {
     initialsInputEl.textContent = "";
     quizBoxEl.appendChild(initialsInputEl);
     quizBoxEl.appendChild(SaveScoreBtnEl).textContent = "Save score";
-    quizBoxEl.appendChild(startRestartBtnEl).textContent = "Restart Quiz";
+    quizBoxEl.appendChild(resetBtn).textContent = "Restart Quiz";
 }
 
 // display high score board and offer option to restart or clear scores in storage
-
 SaveScoreBtnEl.addEventListener("click", highScoreBoard);
+
+
 
 function highScoreBoard() {
     SaveScoreBtnEl.remove();
@@ -169,15 +165,28 @@ function highScoreBoard() {
     quizBoxEl.children[0].textContent = "High Scores";
     instructionsEl.appendChild(highScoresOlEl);
     for (var i = 0; i < highScoresArray.length; i++) {
-        highScoresOlEl.appendChild(highScoresArray[i]).textContent = scoreSet;
+        highScoresOlEl.appendChild(highScoresArray[i]).textContent = "list item";
     }
     quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
     storeScore();
 }
 
+
+highScoresLinkEl.addEventListener("click", scoresFromLink);
+
+function scoresFromLink() {
+    // TODO 
+}
+
 // TODO finish score board: 
 
-// define local storage objects
+// define local storage objects?????
+
+resetBtn.addEventListener("click", refresh);
+
+function refresh() {
+    location.reload()
+}
 
 function storeScore() {
     var scoreSet = {
@@ -196,6 +205,8 @@ function clearScore() {
     localStorage.clear();
     clearScoresBtnEl.textContent = "Cleared";
 }
+
+
 
 // timer function
 
