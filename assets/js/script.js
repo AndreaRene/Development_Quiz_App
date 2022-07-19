@@ -1,25 +1,27 @@
+//TODO Smile. You are enough
+
 // elements needed from dom
 
 var quizBoxEl = document.getElementById("quizBox");
 var instructionsEl = document.getElementById("instructions");
-var startBtnEl = document.getElementById("startQuiz");
+var startRestartBtnEl = document.getElementById("startQuiz");
 var timerEl = document.getElementById("timer");
 
 //create elements needed by quiz 
 
-var initials = document.createElement("input");
-var saveScore = document.createElement("button");
-var clearScoresBtn = document.createElement("button");
-var highScoreDisplay = document.createElement("ol");
+var initialsInputEl = document.createElement("input");
+var SaveScoreBtnEl = document.createElement("button");
+var clearScoresBtnEl = document.createElement("button");
+var highScoresOlEl = document.createElement("ol");
 
-highScoreScoresArray = [];
+highScoresArray = [];
 
 // create li items for scoreboard
 // for more or less change i < 5
 
-for (i = 0; i < 5; i++) {
-    var highScoreScores = document.createElement("li");
-    highScoreScoresArray.push(highScoreScores);
+for (i = 0; i < maxHighScores; i++) {
+    var highScoreLiEl = document.createElement("li");
+    highScoresArray.push(highScoreLiEl);
 }
 
 // local storage variables
@@ -29,6 +31,7 @@ var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
 //other assorted global variables
 
 var minus10 = false;
+var maxHighScores = 5;
 var questionNum;
 var timeLeft;
 
@@ -55,21 +58,21 @@ const questionArray = [
 
 // define correct answers for quiz function
 
-const answerArray2 = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
+const answerArray = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
 
 // create answer buttons with a class for quiz answers
 
-const buttonArray = [];
+const btnArray = [];
 
 for (var i = 1; i < questionArray[0].length; i++) {
-    var button = document.createElement("button");
-    button.setAttribute("class", "answer");
-    buttonArray.push(button);
+    var answerBtnEl = document.createElement("button");
+    answerBtnEl.setAttribute("class", "answer");
+    btnArray.push(answerBtnEl);
 }
 
 // start button click starts off quiz
 
-startBtnEl.addEventListener("click", clickStart)
+startRestartBtnEl.addEventListener("click", clickStart)
 
 // quiz script
 
@@ -77,17 +80,21 @@ function clickStart() {
     questionNum = 0;
     timeLeft = 76;
     minus10 = false;
-    clearScoresBtn.remove();
-    initials.remove();
+    highScoresOlEl.remove();
+    for (var i = 0; i < highScoresArray.length; i++) {
+        highScoresArray[i].remove();
+    }
+    clearScoresBtnEl.remove();
+    initialsInputEl.remove();
     instructionsEl.remove();
-    saveScore.remove();
-    startBtnEl.remove();
+    SaveScoreBtnEl.remove();
+    startRestartBtnEl.remove();
     countdown();
 
     // add buttons for quiz answers to the element 
 
-    for (var i = 0; i < buttonArray.length; i++) {
-        quizBoxEl.appendChild(buttonArray[i]);
+    for (var i = 0; i < btnArray.length; i++) {
+        quizBoxEl.appendChild(btnArray[i]);
     }
     displayQuestions();
 }
@@ -97,8 +104,8 @@ function clickStart() {
 function displayQuestions() {
     if (questionNum < questionArray.length) {
         quizBoxEl.children[0].textContent = questionArray[questionNum][0];
-        for (var i = 0; i < buttonArray.length; i++) {
-            buttonArray[i].textContent = questionArray[questionNum][i + 1];
+        for (var i = 0; i < btnArray.length; i++) {
+            btnArray[i].textContent = questionArray[questionNum][i + 1];
         }
     } else {
         displayScore();
@@ -107,20 +114,20 @@ function displayQuestions() {
 
 // event listener for on answer click(any button)
 
-for (i = 0; i < buttonArray.length; i++) {
-    buttonArray[i].addEventListener("click", buttonClick)
+for (i = 0; i < btnArray.length; i++) {
+    btnArray[i].addEventListener("click", btnClick)
 }
 
 // compare answers against answerArray and determimine correct or not correct
 
-function buttonClick(e) {
+function btnClick(e) {
 
-    for (j = 0; j < answerArray2.length; j++) {
-        if (e.target.textContent === answerArray2[j]) {
+    for (j = 0; j < answerArray.length; j++) {
+        if (e.target.textContent === answerArray[j]) {
             e.target.setAttribute("style", "background-color: green");
             minus10 = false;
             break;
-        } else if (e.target.textContent !== answerArray2[j]) {
+        } else if (e.target.textContent !== answerArray[j]) {
             e.target.setAttribute("style", "background-color: red");
             minus10 = true;
         }
@@ -140,31 +147,31 @@ function buttonClick(e) {
 // end of quiz where user can see and save score and restart quiz
 
 function displayScore() {
-    for (var i = 0; i < buttonArray.length; i++) {
-        buttonArray[i].remove();
+    for (var i = 0; i < btnArray.length; i++) {
+        btnArray[i].remove();
     }
     quizBoxEl.children[0].textContent = "Your score is " + Math.floor(timeLeft);
     quizBoxEl.appendChild(instructionsEl).textContent = "Enter your initials to save your score:";
-    initials.textContent = "";
-    quizBoxEl.appendChild(initials);
-    quizBoxEl.appendChild(saveScore).textContent = "Save score";
-    quizBoxEl.appendChild(startBtnEl).textContent = "Restart Quiz";
+    initialsInputEl.textContent = "";
+    quizBoxEl.appendChild(initialsInputEl);
+    quizBoxEl.appendChild(SaveScoreBtnEl).textContent = "Save score";
+    quizBoxEl.appendChild(startRestartBtnEl).textContent = "Restart Quiz";
 }
 
 // display high score board and offer option to restart or clear scores in storage
 
-saveScore.addEventListener("click", highScoreBoard);
+SaveScoreBtnEl.addEventListener("click", highScoreBoard);
 
 function highScoreBoard() {
-    saveScore.remove();
-    initials.remove();
+    SaveScoreBtnEl.remove();
+    initialsInputEl.remove();
     timerEl.textContent = "";
     quizBoxEl.children[0].textContent = "High Scores";
-    instructionsEl.appendChild(highScoreDisplay);
-    for (var i = 0; i < highScoreScoresArray.length; i++) {
-        quizBoxEl.appendChild(highScoreScoresArray[i]).textContent = "List Item";
+    instructionsEl.appendChild(highScoresOlEl);
+    for (var i = 0; i < highScoresArray.length; i++) {
+        highScoresOlEl.appendChild(highScoresArray[i]).textContent = scoreSet;
     }
-    quizBoxEl.appendChild(clearScoresBtn).textContent = "Clear Scores";
+    quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
     storeScore();
 }
 
@@ -174,7 +181,7 @@ function highScoreBoard() {
 
 function storeScore() {
     var scoreSet = {
-        initials: initials.value,
+        initials: initialsInputEl.value,
         score: Math.floor(timeLeft)
     };
     scoreSets.push(scoreSet);
@@ -183,11 +190,11 @@ function storeScore() {
 
 // clear local storage(scores)
 
-clearScoresBtn.addEventListener("click", clearScore);
+clearScoresBtnEl.addEventListener("click", clearScore);
 
 function clearScore() {
     localStorage.clear();
-    clearScoresBtn.textContent = "Cleared";
+    clearScoresBtnEl.textContent = "Cleared";
 }
 
 // timer function

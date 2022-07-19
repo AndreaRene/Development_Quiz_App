@@ -26,7 +26,7 @@ a:hover {
 }
 
 #quizBox {
-    margin: 1rem 20%;
+    margin: .5rem 20%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -42,7 +42,7 @@ a:hover {
 }
 
 #quizBox header {
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 #question {
@@ -54,6 +54,17 @@ a:hover {
     width: 40%;
     font-size: 1rem;
     background-color: #3c6e71;
+}
+
+li {
+    line-height: 1.4rem;
+}
+
+ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+    text-align: left;
+    margin-top: 1rem;
 }
 
 #pageFooter {
@@ -81,3 +92,23 @@ button:hover {
     background-color: #242323;
     transform: translate(1px, 1px);
 }
+
+/* TODO stop forgetting how to do things and finish the media queries */
+
+/* @media (max-width: 419px) {
+    #quizBox header {
+        font-size: 1.2rem;
+        padding: .5rem;
+    }
+
+}
+
+@media (max-width: 575px) {
+    #quizBox {
+        margin: .5rem 5%;
+    }
+
+    #quizBox header {
+        font-size: 1.5rem;
+    }
+} */
