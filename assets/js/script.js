@@ -16,7 +16,14 @@ var clearScoresBtnEl = document.createElement("button");
 var highScoresOlEl = document.createElement("ol");
 var resetBtn = document.createElement("button");
 
-highScoresArray = [];
+//other assorted global variables
+
+var minus10 = false;
+var maxHighScores = 5;
+var questionNum;
+var timeLeft;
+
+var highScoresArray = [];
 
 // create li items for scoreboard
 // for more or less change i < 5
@@ -30,12 +37,7 @@ for (i = 0; i < maxHighScores; i++) {
 
 var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
 
-//other assorted global variables
 
-var minus10 = false;
-var maxHighScores = 5;
-var questionNum;
-var timeLeft;
 
 // define question and answer sets
 // TODO mix up correct answers
@@ -59,6 +61,7 @@ const questionArray = [
 ];
 
 // define correct answers for quiz function
+// if questions are added, don't forget to add correct answer here
 
 const answerArray = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
 
@@ -114,6 +117,8 @@ for (i = 0; i < btnArray.length; i++) {
 
 // compare answers against answerArray and determimine correct or not correct
 
+// iterates back through displayQuestions for as many times as there are questions in questionArray
+
 function btnClick(e) {
 
     for (j = 0; j < answerArray.length; j++) {
@@ -136,10 +141,7 @@ function btnClick(e) {
     }, 500)
 }
 
-// iterates back through displayQuestions for as many times as there are questions in questionArray
-
 // end of quiz where user can see and save score and restart quiz
-
 
 function displayScore() {
     for (var i = 0; i < btnArray.length; i++) {
@@ -159,15 +161,21 @@ SaveScoreBtnEl.addEventListener("click", highScoreBoard);
 
 
 function highScoreBoard() {
+
     SaveScoreBtnEl.remove();
     initialsInputEl.remove();
+    instructionsEl.remove();
     timerEl.textContent = "";
     quizBoxEl.children[0].textContent = "High Scores";
-    instructionsEl.appendChild(highScoresOlEl);
     for (var i = 0; i < highScoresArray.length; i++) {
         highScoresOlEl.appendChild(highScoresArray[i]).textContent = "list item";
     }
+    quizBoxEl.appendChild(highScoresOlEl);
     quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
+
+
+
+
     storeScore();
 }
 
@@ -175,8 +183,9 @@ function highScoreBoard() {
 highScoresLinkEl.addEventListener("click", scoresFromLink);
 
 function scoresFromLink() {
-    // TODO 
+
 }
+
 
 // TODO finish score board: 
 
