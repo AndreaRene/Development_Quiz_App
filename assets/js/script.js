@@ -23,14 +23,14 @@ var maxHighScores = 5;
 var questionNum;
 var timeLeft;
 
-var highScoresArray = [];
+var highScoresLiArray = [];
 
 // create li items for scoreboard
 // for more or less change i < 5
 
 for (i = 0; i < maxHighScores; i++) {
     var highScoreLiEl = document.createElement("li");
-    highScoresArray.push(highScoreLiEl);
+    highScoresLiArray.push(highScoreLiEl);
 }
 
 // local storage variables
@@ -168,15 +168,19 @@ function highScoreBoard() {
     instructionsEl.remove();
     timerEl.textContent = "";
     quizBoxEl.children[0].textContent = "High Scores";
-    for (var i = 0; i < highScoresArray.length; i++) {
-        highScoresOlEl.appendChild(highScoresArray[i]).textContent = "list item";
+    for (var i = 0; i < highScoresLiArray.length; i++) {
+        highScoresOlEl.appendChild(highScoresLiArray[i]).textContent = Object.values(scoreSets[i]);
     }
     quizBoxEl.insertBefore(highScoresOlEl, quizBoxEl.lastChild);
     quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
     storeScore();
 }
 
+//local storage use objects
+
 // access scoreboard from top left link
+
+//make a sort funtion (similar to forEach)
 
 highScoresLinkEl.addEventListener("click", scoresFromLink);
 
@@ -199,14 +203,18 @@ function refresh() {
 }
 
 function storeScore() {
-    var scoreSet = {
+    var scoreSetObj = {
         initials: initialsInputEl.value,
         score: Math.floor(timeLeft)
     };
-    scoreSets.push(scoreSet);
+    scoreSets.push(scoreSetObj);
     localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
 }
 
+//scoreSets.forEach(function(scoreSet){
+// var name = doc.createl(li) 
+//name.txt = scoreset.initials scoreset.score
+// })
 // clear local storage(scores)
 
 clearScoresBtnEl.addEventListener("click", clearScore);
