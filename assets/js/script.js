@@ -168,8 +168,11 @@ function highScoreBoard() {
     instructionsEl.remove();
     timerEl.textContent = "";
     quizBoxEl.children[0].textContent = "High Scores";
+    scoreSets.sort((a, b) => {
+        return b.score - a.score
+    });
     for (var i = 0; i < highScoresLiArray.length; i++) {
-        highScoresOlEl.appendChild(highScoresLiArray[i]).textContent = Object.values(scoreSets[i]);
+        highScoresOlEl.appendChild(highScoresLiArray[i]).textContent = scoreSets[i].score + "  " + scoreSets[i].initials;
     }
     quizBoxEl.insertBefore(highScoresOlEl, quizBoxEl.lastChild);
     quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
@@ -208,6 +211,9 @@ function storeScore() {
         score: Math.floor(timeLeft)
     };
     scoreSets.push(scoreSetObj);
+    scoreSets.sort((a, b) => {
+        return b.score - a.score
+    });
     localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
 }
 
