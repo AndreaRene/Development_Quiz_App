@@ -1,3 +1,6 @@
+/* TODO Smile. You are enough. */
+/* body styling */
+
 body {
     color: #ffffff;
     background-color: #d9d9d9;
@@ -7,10 +10,14 @@ body {
     height: 100%;
 }
 
+/* end of body */
+
+/* start of header syling */
+
 #pageHeader,
 #pageFooter {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 2rem;
     background-color: #3c6e71;
     z-index: 1;
@@ -25,6 +32,10 @@ body {
     color: #353535;
     font-weight: bold;
 }
+
+/* end of header styling */
+
+/* start of main content styling (big box) */
 
 #quizBox {
     margin: .5rem 20%;
@@ -49,12 +60,6 @@ body {
     font-size: 1.2rem;
 }
 
-.answer {
-    width: 30%;
-    font-size: 1.5rem;
-    background-color: #3c6e71;
-}
-
 button {
     padding: .8rem 0;
     width: 8rem;
@@ -71,6 +76,12 @@ button:hover {
     cursor: pointer;
     background-color: #242323;
     transform: translate(1px, 1px);
+}
+
+.answer {
+    width: 30%;
+    font-size: 1.5rem;
+    background-color: #3c6e71;
 }
 
 input {
@@ -92,14 +103,19 @@ ol {
     font-size: 1.2rem;
 }
 
+/* end of main content styling (big box) */
+
+/* footer styling */
 
 #pageFooter {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
-
 }
+
+/* end of footer styling */
+
+/* styling for large screens */
 
 @media (max-width: 1199px) {
 
@@ -124,6 +140,8 @@ ol {
         font-size: 1rem;
     }
 }
+
+/* styling for small screens */
 
 @media (max-width: 991px) {
 
@@ -153,6 +171,8 @@ ol {
     }
 }
 
+/* styling for mobile devices */
+
 @media (max-width: 420px) {
     #quizBox {
         width: 90%;
@@ -171,6 +191,8 @@ ol {
     }
 
 }
+
+/* styling for extra small devices */
 
 @media (max-width: 350px) {
     .answer {

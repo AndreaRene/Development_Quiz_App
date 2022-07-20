@@ -25,14 +25,6 @@ var timeLeft;
 
 var highScoresLiArray = [];
 
-// create li items for scoreboard
-// for more or less change i < 5
-
-for (i = 0; i < maxHighScores; i++) {
-    var highScoreLiEl = document.createElement("li");
-    highScoresLiArray.push(highScoreLiEl);
-}
-
 // local storage variables
 
 var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
@@ -81,6 +73,7 @@ startBtnEL.addEventListener("click", clickStart)
 function clickStart() {
     questionNum = 0;
     timeLeft = 76;
+    highScoresLinkEl.remove();
     instructionsEl.remove();
     startBtnEL.remove();
     countdown();
@@ -154,15 +147,12 @@ function displayScore() {
 
 // display high score board and offer option to restart or clear scores in storage
 
-
-// TODO finish score board 
-// TODO finish score board 
-// TODO finish score board 
-
 SaveScoreBtnEl.addEventListener("click", highScoreBoard);
 
 function highScoreBoard() {
 
+    storeScore();
+    var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
     SaveScoreBtnEl.remove();
     initialsInputEl.remove();
     instructionsEl.remove();
@@ -171,24 +161,38 @@ function highScoreBoard() {
     scoreSets.sort((a, b) => {
         return b.score - a.score
     });
+
+    // create li items for scoreboard
+
+    for (j = 0; j < scoreSets.length; j++) {
+        if (j >= maxHighScores) {
+            break;
+        } else {
+            var highScoreLiEl = document.createElement("li");
+            highScoresLiArray.push(highScoreLiEl);
+        }
+    }
     for (var i = 0; i < highScoresLiArray.length; i++) {
-        highScoresOlEl.appendChild(highScoresLiArray[i]).textContent = scoreSets[i].score + "  " + scoreSets[i].initials;
+        if (scoreSets[i].score === null || scoreSets[i].initials === "") {
+            break;
+        } else {
+            highScoresOlEl.appendChild(highScoresLiArray[i]).textContent = scoreSets[i].score + "  " + scoreSets[i].initials;
+        }
     }
     quizBoxEl.insertBefore(highScoresOlEl, quizBoxEl.lastChild);
     quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
-    storeScore();
 }
 
-//local storage use objects
+// access scoreboard from top link
 
-// access scoreboard from top left link
-
-//make a sort funtion (similar to forEach)
 
 highScoresLinkEl.addEventListener("click", scoresFromLink);
 
 function scoresFromLink() {
+    highScoresLinkEl.remove();
+    timerEl.remove();
     SaveScoreBtnEl.remove();
+    initialsInputEl.value = "";
     initialsInputEl.remove();
     instructionsEl.remove();
     for (var i = 0; i < btnArray.length; i++) {
@@ -206,28 +210,26 @@ function refresh() {
 }
 
 function storeScore() {
-    var scoreSetObj = {
-        initials: initialsInputEl.value,
-        score: Math.floor(timeLeft)
-    };
-    scoreSets.push(scoreSetObj);
-    scoreSets.sort((a, b) => {
-        return b.score - a.score
-    });
-    localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
+    if (initialsInputEl.value === "") {
+        return;
+    } else {
+        var scoreSetObj = {
+            initials: initialsInputEl.value,
+            score: Math.floor(timeLeft)
+        };
+        scoreSets.push(scoreSetObj);
+        scoreSets.sort((a, b) => {
+            return b.score - a.score
+        });
+        localStorage.setItem("scoreSets", JSON.stringify(scoreSets));
+    }
 }
-
-//scoreSets.forEach(function(scoreSet){
-// var name = doc.createl(li) 
-//name.txt = scoreset.initials scoreset.score
-// })
-// clear local storage(scores)
 
 clearScoresBtnEl.addEventListener("click", clearScore);
 
 function clearScore() {
     localStorage.clear();
-    clearScoresBtnEl.textContent = "Cleared";
+    location.reload();
 }
 
 // timer function
