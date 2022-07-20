@@ -17,5 +17,5 @@ In this application I wanted to create a quiz that students could use to judge t
 * Javascript
 
 
-![screen capture of my app at mobile sizing](https://github.com/AndreaRene/Password_Generator_9000/blob/main/assets/flowchartCompleted.PNG)
+![screen capture of my app at mobile sizing](https://github.com/AndreaRene/Development_Quiz_App/blob/main/assets/imgs/mobile_quiz.PNG)
 
