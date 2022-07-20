@@ -156,9 +156,13 @@ function displayScore() {
 }
 
 // display high score board and offer option to restart or clear scores in storage
+
+
+// TODO finish score board 
+// TODO finish score board 
+// TODO finish score board 
+
 SaveScoreBtnEl.addEventListener("click", highScoreBoard);
-
-
 
 function highScoreBoard() {
 
@@ -170,26 +174,26 @@ function highScoreBoard() {
     for (var i = 0; i < highScoresArray.length; i++) {
         highScoresOlEl.appendChild(highScoresArray[i]).textContent = "list item";
     }
-    quizBoxEl.appendChild(highScoresOlEl);
+    quizBoxEl.insertBefore(highScoresOlEl, quizBoxEl.lastChild);
     quizBoxEl.appendChild(clearScoresBtnEl).textContent = "Clear Scores";
-
-
-
-
     storeScore();
 }
 
+// access scoreboard from top left link
 
 highScoresLinkEl.addEventListener("click", scoresFromLink);
 
 function scoresFromLink() {
-
+    SaveScoreBtnEl.remove();
+    initialsInputEl.remove();
+    instructionsEl.remove();
+    for (var i = 0; i < btnArray.length; i++) {
+        btnArray[i].remove();
+    }
+    startBtnEL.remove();
+    quizBoxEl.appendChild(resetBtn).textContent = "Restart Quiz";
+    highScoreBoard();
 }
-
-
-// TODO finish score board: 
-
-// define local storage objects?????
 
 resetBtn.addEventListener("click", refresh);
 
@@ -214,8 +218,6 @@ function clearScore() {
     localStorage.clear();
     clearScoresBtnEl.textContent = "Cleared";
 }
-
-
 
 // timer function
 

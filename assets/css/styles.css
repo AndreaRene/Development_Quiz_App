@@ -88,7 +88,8 @@ ol {
     list-style-type: decimal;
     list-style-position: inside;
     text-align: left;
-    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
 }
 
 
@@ -146,6 +147,10 @@ ol {
     #instructions {
         margin: 1rem;
     }
+
+    ol {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 420px) {
@@ -175,5 +180,9 @@ ol {
     #quizBox header {
         font-size: 1rem;
         margin: 1rem;
+    }
+
+    ol {
+        font-size: .8rem;
     }
 }
