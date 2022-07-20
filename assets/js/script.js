@@ -37,17 +37,14 @@ for (i = 0; i < maxHighScores; i++) {
 
 var scoreSets = JSON.parse(localStorage.getItem("scoreSets")) || [];
 
-
-
 // define question and answer sets
-// TODO mix up correct answers
 
 const questionArray = [
     [
-        "Commonly used data types DO Not Include:", "strings", "booleans", "alerts", "numbers"
+        "Commonly used data types DO Not Include:", "strings", "alerts", "booleans", "numbers"
     ],
     [
-        "The condition in an if / else statement is enclosed with:", "carrots", "curly brackets", "parenthesis", "square brackets"
+        "The condition in an if / else statement is enclosed with:", "parenthesis", "carrots", "curly brackets", "square brackets"
     ],
     [
         "Arrays in JavaScript can be used to store:", "numbers/strings", "other arrays", "booleans", "all of the above"
@@ -56,14 +53,14 @@ const questionArray = [
         "String values must be enclosed with _______ when being assigned to variables.", "commas", "curly brackets", "quotes", "ampersands"
     ],
     [
-        "A useful tool to use during development/debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log"
+        "A useful tool to use during development/debugging for printing content to the debugger is:", "JavaScript", "console.log", "terminal/bash", "for loops"
     ]
 ];
 
 // define correct answers for quiz function
 // if questions are added, don't forget to add correct answer here
 
-const answerArray = [questionArray[0][3], questionArray[1][3], questionArray[2][4], questionArray[3][3], questionArray[4][4]];
+const answerArray = [questionArray[0][2], questionArray[1][1], questionArray[2][4], questionArray[3][3], questionArray[4][2]];
 
 // create answer buttons with a class for quiz answers
 
